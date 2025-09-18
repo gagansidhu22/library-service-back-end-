@@ -12,7 +12,7 @@ import {
 const router: Router = Router();
 
 /**
- * Define routes for book management
+ * Define routes for book Management
  */
 router.get("/", getAllBooks);
 router.post("/", addBook);
