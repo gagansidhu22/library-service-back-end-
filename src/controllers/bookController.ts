@@ -4,7 +4,25 @@ import * as bookService from "../Services/bookService";
 
 export const getAllBooks = (req: Request, res: Response): void => {
     try {
-        const books = bookService.getAllBooks();
+        const { title, author, genre } = req.query;
+
+        let books = bookService.getAllBooks();
+
+        if (title) {
+            const t = String(title).toLowerCase();
+            books = books.filter(b => b.title.toLowerCase().includes(t));
+        }
+
+        if (author) {
+            const a = String(author).toLowerCase();
+            books = books.filter(b => b.author.toLowerCase().includes(a));
+        }
+
+        if (genre) {
+            const g = String(genre).toLowerCase();
+            books = books.filter(b => b.genre.toLowerCase() === g);
+        }
+
         res.status(HTTP_STATUS.OK).json({
             message: "Books retrieved",
             data: books,
@@ -15,6 +33,7 @@ export const getAllBooks = (req: Request, res: Response): void => {
         });
     }
 };
+
 
 export const addBook = (req: Request, res: Response): void => {
     try {
